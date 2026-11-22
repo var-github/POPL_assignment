@@ -47,3 +47,14 @@
           (cons x mapped)
           mapped)))
   process)
+
+;; (print-insert-result)
+;; Reads x, then lst, then n from standard input with read (in that order),
+;; prints (insert-if-short x lst n) with display followed by a newline, and
+;; prints no prompt or any other text.
+(define (print-insert-result)
+  (let* ((x (read))
+         (lst (read))
+         (n (read)))
+    (display (insert-if-short x lst n))
+    (newline)))
