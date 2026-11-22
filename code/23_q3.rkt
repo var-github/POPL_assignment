@@ -28,3 +28,10 @@
       (inorder-acc (cadr tree)
                    (cons (car tree)
                          (inorder-acc (caddr tree) acc)))))
+
+;; (print-inorder tree)
+;; Prints the inorder list of the tree's values on one line with display,
+;; followed by a newline. The empty tree prints ().
+(define (print-inorder tree)
+  (display (inorder-values tree))
+  (newline))
