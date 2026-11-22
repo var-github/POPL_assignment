@@ -43,3 +43,21 @@
           (cons x mapped)
           mapped)))
   (process lst))
+
+;; (make-inserter x len-ok?)
+;; Returns a function of one argument (a list) that inserts x at the front of
+;; every list, at every level of nesting, whose original length satisfies the
+;; predicate len-ok? (a function of one number). Atoms are left unchanged.
+;; Recursive reading: same shape as insert-if-short, but the decision to prepend
+;; x is made by calling len-ok? on the list's original length.
+(define (make-inserter x len-ok?)
+  (define (transform item)
+    (if (or (null? item) (pair? item))
+        (process item)
+        item))
+  (define (process l)
+    (let ((mapped (my-map transform l)))
+      (if (len-ok? (my-length l))
+          (cons x mapped)
+          mapped)))
+  process)
