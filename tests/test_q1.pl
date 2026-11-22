@@ -4,7 +4,7 @@
 
 :- consult('../code/23_q1.pl').
 
-% Helper: A known candidate solution satisfying clues 1 through 8
+% Helper: A known candidate solution satisfying clues 1 through 9
 % (Corresponds to Solution 2: Alex=(design, java, embedded), Carla=(testing, python, AI), etc.)
 sample_sol_valid([
     p('Alex',  design,      java,       embedded),
@@ -83,13 +83,24 @@ test(clue_8) :-
     sample_sol_invalid(Invalid),
     \+ clue(8, Invalid).
 
-% Test 10: count_solutions for empty active list gives all 13824 states
+% Test 10: Clue 9 (The friend who prefers AI works in testing)
+test(clue_9) :-
+    sample_sol_valid(Valid),
+    clue(9, Valid),
+    sample_sol_invalid(Invalid),
+    \+ clue(9, Invalid).
+
+% Test 11: count_solutions for empty active list gives all 13824 states
 test(count_solutions_empty) :-
     count_solutions([], 13824).
 
-% Test 11: count_solutions for clues 1 to 8 gives exactly 3 solutions
+% Test 12: count_solutions for clues 1 to 8 gives exactly 3 solutions
 test(count_solutions_1_to_8) :-
     count_solutions([1,2,3,4,5,6,7,8], 3).
+
+% Test 13: count_solutions for clues 1 to 9 gives unique solution (N = 1)
+test(count_solutions_1_to_9_unique) :-
+    count_solutions([1,2,3,4,5,6,7,8,9], 1).
 
 % Runner predicate
 run_test_case(Name) :-
@@ -104,9 +115,10 @@ run_tests :-
     AllTests = [
         valid_solution_structure,
         clue_1, clue_2, clue_3, clue_4,
-        clue_5, clue_6, clue_7, clue_8,
+        clue_5, clue_6, clue_7, clue_8, clue_9,
         count_solutions_empty,
-        count_solutions_1_to_8
+        count_solutions_1_to_8,
+        count_solutions_1_to_9_unique
     ],
     forall(member(T, AllTests), run_test_case(T)),
     writeln('All P1 unit tests passed successfully!').
