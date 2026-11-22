@@ -39,10 +39,10 @@ build_expr(List, /(ExprL, ExprR), Val) :-
 
 % op_prec(+Op, -Precedence)
 % Precedence levels: * and / bind tighter (2) than + and - (1).
-op_prec(+, 1).
-op_prec(-, 1).
-op_prec(*, 2).
-op_prec(/, 2).
+op_prec('+', 1).
+op_prec('-', 1).
+op_prec('*', 2).
+op_prec('/', 2).
 
 % expr_to_string(+Expr, -String)
 % True when String is the canonical SWI-Prolog string representation of Expr,
