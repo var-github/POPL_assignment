@@ -73,7 +73,7 @@ The unique remaining solution is:
 
 ---
 
-## 3. Independent Verification by Hand Deduction (added by <YOUR NAME>)
+## 3. Independent Verification by Hand Deduction 
 
 To cross-check the Prolog result, I solved clues 1 to 8 manually, without enumeration.
 
