@@ -35,3 +35,31 @@
 (define (print-inorder tree)
   (display (inorder-values tree))
   (newline))
+
+;; (preorder-values tree)
+;; Returns the node values in preorder (node, left subtree, right subtree).
+;; Recursive reading: preorder-acc tree acc = node value, then preorder of left,
+;; then preorder of right, followed by acc. Empty tree yields acc.
+(define (preorder-values tree)
+  (preorder-acc tree '()))
+
+(define (preorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (cons (car tree)
+            (preorder-acc (cadr tree)
+                          (preorder-acc (caddr tree) acc)))))
+
+;; (postorder-values tree)
+;; Returns the node values in postorder (left subtree, right subtree, node).
+;; Recursive reading: postorder-acc tree acc = postorder of left, then postorder
+;; of right, then the node value consed before acc. Empty tree yields acc.
+(define (postorder-values tree)
+  (postorder-acc tree '()))
+
+(define (postorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (postorder-acc (cadr tree)
+                     (postorder-acc (caddr tree)
+                                    (cons (car tree) acc)))))
