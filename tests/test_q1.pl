@@ -13,12 +13,12 @@ sample_sol_valid([
     p('Dana',  research,    'c++',      data)
 ]).
 
-% Helper: A candidate solution designed to violate multiple clues
+% Helper: A candidate solution designed to violate every single clue 1 through 9
 sample_sol_invalid([
-    p('Alex',  development, 'c++',      'AI'),
-    p('Ben',   testing,     java,       data),
-    p('Carla', research,    python,     embedded),
-    p('Dana',  design,      javascript, web)
+    p('Alex',  research,    'c++',      'AI'),
+    p('Ben',   testing,     javascript, data),
+    p('Carla', development, java,       embedded),
+    p('Dana',  design,      python,     web)
 ]).
 
 % Test 1: Candidate generator produces a 4-element list
