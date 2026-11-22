@@ -1,5 +1,7 @@
 # Problem 1 Report: Department Assignment Puzzle Analysis
 
+In the solution lists below, each person's tuple is ordered as **department, preferred language, project**.
+
 ## 1. Solution Count for Clues 1 to 8 (Task P1.b)
 
 Querying `count_solutions([1,2,3,4,5,6,7,8], N)` yields:
