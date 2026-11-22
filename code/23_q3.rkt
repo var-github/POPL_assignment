@@ -74,3 +74,22 @@
   (newline)
   (display (postorder-values tree))
   (newline))
+
+;; (tree-height tree)
+;; Height of the empty tree () is 0; height of a node is 1 plus the larger of
+;; the heights of its two subtrees. A single node therefore has height 1.
+(define (tree-height tree)
+  (if (null? tree)
+      0
+      (+ 1 (max (tree-height (cadr tree))
+                (tree-height (caddr tree))))))
+
+;; (leaf-count tree)
+;; Number of leaves, a leaf being a node whose left and right subtrees are both
+;; (). The empty tree has no leaves.
+(define (leaf-count tree)
+  (cond
+    ((null? tree) 0)
+    ((and (null? (cadr tree)) (null? (caddr tree))) 1)
+    (else (+ (leaf-count (cadr tree))
+             (leaf-count (caddr tree))))))
