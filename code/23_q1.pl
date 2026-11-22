@@ -59,3 +59,23 @@ clue(7, Solution) :-
 clue(8, Solution) :-
     member(p(_, research, Lang, data), Solution),
     Lang \= javascript.
+
+% satisfies_clues(+ClueList, +Solution)
+% True when Solution satisfies every clue number listed in ClueList.
+satisfies_clues([], _).
+satisfies_clues([ClueNum|Rest], Solution) :-
+    clue(ClueNum, Solution),
+    satisfies_clues(Rest, Solution).
+
+% solve_active(+Active, -Solution)
+% True when Solution is a valid assignment that satisfies all clues in Active.
+solve_active(Active, Solution) :-
+    valid_solution(Solution),
+    satisfies_clues(Active, Solution).
+
+% count_solutions(+Active, -N)
+% True when N is the number of distinct solutions that satisfy exactly the
+% clues specified in Active (ignoring all others).
+count_solutions(Active, N) :-
+    findall(Sol, solve_active(Active, Sol), Solutions),
+    length(Solutions, N).
