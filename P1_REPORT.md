@@ -70,3 +70,49 @@ The unique remaining solution is:
 - **Ben** = `[development, javascript, web]`
 - **Carla** = `[testing, python, 'AI']`
 - **Dana** = `[research, 'c++', data]`
+
+---
+
+## 3. Independent Verification by Hand Deduction (added by <YOUR NAME>)
+
+To cross-check the Prolog result, I solved clues 1 to 8 manually, without enumeration.
+
+**Step 1: Ben.**
+- Clue 4 gives Ben the web project and rules out testing.
+- Clue 8 says the data-project friend works in research, so Ben (web) is not in research.
+- Clues 2 and 6 rule out development for Alex and Carla, and clue 7 limits Dana to research or testing.
+- So **Ben works in development**.
+- Ben cannot like Python (clue 3 ties Python to testing) or Java (clue 5 ties Java to design), and Ben is not in research, where clue 8 bars JavaScript. That leaves **Ben ∈ {c++, javascript}**.
+
+**Step 2: Branch on Dana (research or testing).**
+
+*Case A: Dana is in testing.*
+- Clue 3 gives Dana Python.
+- Dana cannot have AI (clue 1), web (Ben's) or data (research's), so Dana gets **embedded**.
+- Alex and Carla split research and design. Research gets data (clue 8) and design gets AI (clue 1).
+- Java belongs to a design friend (clue 5), so the design friend has Java. The research friend cannot have JavaScript (clue 8), so research has C++ and Ben has JavaScript.
+- Alex cannot like C++ (clue 2), so Alex is in design and Carla is in research.
+- This gives **Solution 1**.
+
+*Case B: Dana is in research.*
+- Dana gets data (clue 8). Dana cannot have Java (clue 7), Python (testing's) or JavaScript (clue 8), so Dana has **C++** and Ben has JavaScript.
+- Alex and Carla split testing (Python) and design (Java), and they hold AI and embedded between them.
+- Carla cannot have embedded (clue 6), so Carla has AI and Alex has embedded.
+- Clues 1 to 8 do not say who is in testing and who is in design, so both swaps are valid, giving **Solutions 2 and 3**.
+
+**Conclusion:** exactly 3 solutions, matching `count_solutions([1,2,3,4,5,6,7,8], N)` giving `N = 3`. The only open question is whether Alex or Carla is in testing, and in Case A the other attributes force the assignment.
+
+## 4. Other Valid Candidates for Clue 9
+
+Any attribute-only clue that is true in Solution 2 and false in Solutions 1 and 3 would also repair the puzzle. Two other examples:
+
+| Candidate clue | Sol. 1 | Sol. 2 | Sol. 3 |
+|---|---|---|---|
+| The friend who likes Python prefers the AI project | False | **True** | False |
+| The friend who prefers the embedded project works in design | False | **True** | False |
+
+Both are valid because they distinguish Solution 2, where AI pairs with Python and testing and embedded pairs with design. By contrast, no attribute-only clue can separate Solution 1 from Solution 3, since they contain identical tuples. Only a clue naming a friend could, and the assignment forbids that. This confirms that Solution 2 is the only target an attribute-only clue 9 can isolate.
+
+## 5. Implementation Note
+
+In `main/0` the comment says it solves for "clues 1 to 8", but the code calls `solve_active([1,2,3,4,5,6,7,8,9], ...)`. The code is correct, because the repaired puzzle uses all nine clues, but the comment should read "clues 1 to 9" so it matches the behaviour.
