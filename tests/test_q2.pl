@@ -65,23 +65,27 @@ test(edge_case_single_element) :-
 
 % Test 10: Canonical string formatting & precedence rules
 test(formatting_precedence_rules) :-
-    expr_to_string(*(+(4, 2), 3), "(4+2)*3"),
-    expr_to_string(+(4, *(2, 3)), "4+2*3"),
-    expr_to_string(*(/(8, 4), 2), "8/4*2"),
-    expr_to_string(/(8, *(4, 2)), "8/(4*2)"),
-    expr_to_string(-(-(1, 2), 3), "1-2-3"),
-    expr_to_string(-(1, -(2, 3)), "1-(2-3)"),
-    expr_to_string(+(1, +(2, 3)), "1+(2+3)"),
-    expr_to_string(+(+(1, 2), 3), "1+2+3").
+    expr_to_string('*'('+'(4, 2), 3), "(4+2)*3"),
+    expr_to_string('+'(4, '*'(2, 3)), "4+2*3"),
+    expr_to_string('*'('/'(8, 4), 2), "8/4*2"),
+    expr_to_string('/'(8, '*'(4, 2)), "8/(4*2)"),
+    expr_to_string('-'('-'(1, 2), 3), "1-2-3"),
+    expr_to_string('-'(1, '-'(2, 3)), "1-(2-3)"),
+    expr_to_string('+'(1, '+'(2, 3)), "1+(2+3)"),
+    expr_to_string('+'('+'(1, 2), 3), "1+2+3").
 
 % Test 11: Division constraints - non-integer division rejected
-% [5, 2, 7] has no equation because 5/2 is not exact integer division
+% 6/2 is exact (succeeds with 3), while 5/2 has remainder and must fail
 test(division_exactness) :-
-    all_equations([5, 2, 7], []).
+    build_expr([6, 2], '/'(6, 2), 3),
+    \+ build_expr([5, 2], '/'(5, 2), _).
 
 % Test 12: Division by zero rejected
 test(division_by_zero) :-
-    all_equations([4, 0, 0], []).
+    % Direct division by zero must fail
+    \+ build_expr([4, 0], '/'(4, 0), _),
+    % Division by an expression evaluating to zero must fail
+    \+ build_expr([4, 2, 2], '/'(4, '-'(2, 2)), _).
 
 % Runner predicate
 run_test_case(Name) :-

@@ -14,22 +14,22 @@ split_list(List, Left, Right) :-
 build_expr([N], N, N) :-
     integer(N),
     N >= 0.
-build_expr(List, +(ExprL, ExprR), Val) :-
+build_expr(List, '+'(ExprL, ExprR), Val) :-
     split_list(List, Left, Right),
     build_expr(Left, ExprL, ValL),
     build_expr(Right, ExprR, ValR),
     Val is ValL + ValR.
-build_expr(List, -(ExprL, ExprR), Val) :-
+build_expr(List, '-'(ExprL, ExprR), Val) :-
     split_list(List, Left, Right),
     build_expr(Left, ExprL, ValL),
     build_expr(Right, ExprR, ValR),
     Val is ValL - ValR.
-build_expr(List, *(ExprL, ExprR), Val) :-
+build_expr(List, '*'(ExprL, ExprR), Val) :-
     split_list(List, Left, Right),
     build_expr(Left, ExprL, ValL),
     build_expr(Right, ExprR, ValR),
     Val is ValL * ValR.
-build_expr(List, /(ExprL, ExprR), Val) :-
+build_expr(List, '/'(ExprL, ExprR), Val) :-
     split_list(List, Left, Right),
     build_expr(Left, ExprL, ValL),
     build_expr(Right, ExprR, ValR),
