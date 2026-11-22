@@ -92,3 +92,39 @@ equation_to_string(ExprL, ExprR, EqString) :-
     expr_to_string(ExprR, StrR),
     string_concat(StrL, "=", Temp),
     string_concat(Temp, StrR, EqString).
+
+% find_equation(+List, -EqString)
+% Helper that partitions List into non-empty Left and Right sublists,
+% constructs expressions on each side evaluating to the exact same integer value,
+% and formats the result as a canonical equation string.
+find_equation(List, EqString) :-
+    split_list(List, Left, Right),
+    build_expr(Left, ExprL, Val),
+    build_expr(Right, ExprR, Val),
+    equation_to_string(ExprL, ExprR, EqString).
+
+% generate_equation(+List, -Equation)
+% True when Equation is unified with one valid equation for List.
+% Fails gracefully (does not loop or throw errors) if no valid equation exists,
+% or if length(List) < 2.
+generate_equation(List, Equation) :-
+    List = [_, _ | _],
+    find_equation(List, Equation),
+    !.
+
+% all_equations(+List, -Equations)
+% True when Equations is the list of all valid equations for List,
+% without duplicates, sorted in standard order via sort/2.
+% Returns [] if no valid equation exists or length(List) < 2.
+all_equations(List, Equations) :-
+    (   List = [_, _ | _]
+    ->  findall(Eq, find_equation(List, Eq), RawEquations),
+        sort(RawEquations, Equations)
+    ;   Equations = []
+    ).
+
+% count_equations(+List, -N)
+% True when N is the total number of distinct valid equations for List.
+count_equations(List, N) :-
+    all_equations(List, Equations),
+    length(Equations, N).
