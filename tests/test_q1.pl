@@ -102,6 +102,14 @@ test(count_solutions_1_to_8) :-
 test(count_solutions_1_to_9_unique) :-
     count_solutions([1,2,3,4,5,6,7,8,9], 1).
 
+% Test 14: main/0 executes cleanly and succeeds
+test(main_execution) :-
+    with_output_to(string(Output), main),
+    sub_string(Output, _, _, _, "Alex = [design, java, embedded]"),
+    sub_string(Output, _, _, _, "Ben = [development, javascript, web]"),
+    sub_string(Output, _, _, _, "Carla = [testing, python, AI]"),
+    sub_string(Output, _, _, _, "Dana = [research, c++, data]").
+
 % Runner predicate
 run_test_case(Name) :-
     (   test(Name)
@@ -118,7 +126,8 @@ run_tests :-
         clue_5, clue_6, clue_7, clue_8, clue_9,
         count_solutions_empty,
         count_solutions_1_to_8,
-        count_solutions_1_to_9_unique
+        count_solutions_1_to_9_unique,
+        main_execution
     ],
     forall(member(T, AllTests), run_test_case(T)),
     writeln('All P1 unit tests passed successfully!').

@@ -83,3 +83,23 @@ solve_active(Active, Solution) :-
 count_solutions(Active, N) :-
     findall(Sol, solve_active(Active, Sol), Solutions),
     length(Solutions, N).
+
+% main/0
+% Solves for and prints one solution that satisfies clues 1 to 8 as four lines
+% in the exact format:
+% Alex = [Dept, Lang, Proj]
+% Ben = [Dept, Lang, Proj]
+% Carla = [Dept, Lang, Proj]
+% Dana = [Dept, Lang, Proj]
+main :-
+    solve_active([1,2,3,4,5,6,7,8,9], [
+        p('Alex',  DeptA, LangA, ProjA),
+        p('Ben',   DeptB, LangB, ProjB),
+        p('Carla', DeptC, LangC, ProjC),
+        p('Dana',  DeptD, LangD, ProjD)
+    ]),
+    format('Alex = [~w, ~w, ~w]~n', [DeptA, LangA, ProjA]),
+    format('Ben = [~w, ~w, ~w]~n', [DeptB, LangB, ProjB]),
+    format('Carla = [~w, ~w, ~w]~n', [DeptC, LangC, ProjC]),
+    format('Dana = [~w, ~w, ~w]~n', [DeptD, LangD, ProjD]),
+    !.
